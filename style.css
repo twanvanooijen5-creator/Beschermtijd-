@@ -1,0 +1,76 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #2e2929;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input[type=number] {
+    padding: 10px;
+    font-size: 18px;
+    width: 100px;
+    margin: 10px;
+    border-color: black;
+    background-color: rgb(233, 227, 227);
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color:red;
+    color:white;
+    border-color:red;
+    
+}
+
+.hidden {
+    display: none;
+}
+
+#waarschuwing {
+    text-align: left;
+    margin-top: 10px;
+    color: red;
+}
+
+#alternatieven {
+    text-align: left;
+    margin-top: 10px;
+    
+    
+
+}
+
+#totaalDagen {
+    text-align: left;
+    margin-top: 10px;
+    color: red;
+}
+
+#downloadknop {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color:#2e2929;
+    color:white;
+    border-color:#2e2929;
+}
+
+#titel {
+    color: red;
+}
+
+#watdoen {
+    text-align: center; 
+}
