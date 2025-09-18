@@ -46,32 +46,19 @@ function berekenTijd() {
     
     URL.revokeObjectURL(url);
 }
+document.getElementById("downloadBtn").addEventListener("click", function() {
+    const tijd = document.getElementById("hoursInput").value || 0;
+    const tekst = `Je hebt vandaag ${tijd} uur op je telefoon gezeten.\n\nWat had je kunnen doen met die tijd?\n- Lezen\n- Sporten\n- Slapen\n\nTijdsloket – Geen oordeel, alleen inzicht.`;
 
-function genereerEnDownload() {
-    const urenPerDag = parseFloat(document.getElementById("hoursInput").value);
-    if (isNaN(urenPerDag)) return;
-
-    const totaalUren = urenPerDag * 365;
-    const totaalDagen = (totaalUren / 24).toFixed(1);
-
-    let tekst = `=== Tijdsloket ===\n\n`;
-    tekst += `Je zit gemiddeld ${urenPerDag.toFixed(1)} uur per dag op je smartphone.\n`;
-    tekst += `Dat is ${totaalUren.toFixed(0)} uur per jaar (~${totaalDagen} dagen).\n\n`;
-    tekst += `Wat je daarmee had kunnen doen:\n`;
-
-    const alternatieven = [
-        { activiteit: "boeken lezen (300 pag)", tijdPer: 6 },
-        { activiteit: "online cursussen", tijdPer: 20 },
-        { activiteit: "keer afspreken met vrienden", tijdPer: 2 }
-    ];
-
-    alternatieven.forEach(item => {
-        const aantal = Math.floor(totaalUren / item.tijdPer);
-        tekst += `- ${aantal} × ${item.activiteit}\n`;
-    });
-
-    tekst += `\n#WatDoeJijMetJeTijd?\n`;
-
-    downloadTicket(tekst);
-}
+    const blob = new Blob([tekst], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tijdsloket-ticket.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
 }
