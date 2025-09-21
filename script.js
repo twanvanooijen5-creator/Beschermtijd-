@@ -15,10 +15,10 @@ function berekenTijd() {
     `;
 
     const alternatieven = [
-        { activiteit: "boeken lezen (van 300 pagina's)", tijdPer: 6 },
+        { activiteit: "een boek lezen (van 300 pagina's)", tijdPer: 6 },
         { activiteit: "online cursussen afronden", tijdPer: 20 },
-        { activiteit: "keer met vrienden afspreken", tijdPer: 2 },
-        { activiteit: "workouts doen van 45 minuten", tijdPer: 0.75 }
+        { activiteit: "met vrienden afspreken", tijdPer: 2 },
+        { activiteit: "een workout doen van 45 minuten", tijdPer: 0.75 }
     ];
 
     const altList = document.getElementById("alternatieven");
