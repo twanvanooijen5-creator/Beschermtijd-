@@ -34,6 +34,7 @@ function berekenTijd() {
     document.getElementById("output").innerHTML = output;
     document.getElementById("resultaat").classList.remove("hidden");
     document.getElementById("downloadknop").classList.remove("hidden");
+    
 
     function downloadTicket(tekst) {
     const blob = new Blob([tekst], { type: 'text/plain' });
