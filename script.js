@@ -33,27 +33,20 @@ function berekenTijd() {
 
     document.getElementById("output").innerHTML = output;
     document.getElementById("resultaat").classList.remove("hidden");
-    document.getElementById("downloadknop").classList.remove("hidden");
-    
-
-    function downloadTicket(tekst) {
-    const blob = new Blob([tekst], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tijdticket.txt';
-    a.click();
-    
-    URL.revokeObjectURL(url);
+    document.getElementById("downloadBtn").classList.remove("hidden");
 }
-document.getElementById("downloadBtn").addEventListener("click", function() {
+
+document.getElementById("downloadBtn").addEventListener("click", function () {
     const tijd = document.getElementById("hoursInput").value || 0;
     const tekst = `Je hebt vandaag ${tijd} uur op je telefoon gezeten.\n\nWat had je kunnen doen met die tijd?\n- Lezen\n- Sporten\n- Slapen\n\nTijdsloket – Geen oordeel, alleen inzicht.`;
 
+    // ✅ Open printvenster direct bij klik
+    const printVenster = window.open("", "", "height=600,width=800");
+
+    // ✅ Maak en download het tekstbestand
     const blob = new Blob([tekst], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-    
+
     const a = document.createElement("a");
     a.href = url;
     a.download = "tijdsloket-ticket.txt";
@@ -61,5 +54,15 @@ document.getElementById("downloadBtn").addEventListener("click", function() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    // ✅ Print dezelfde inhoud
+    printVenster.document.write("<html><head><title>Afdrukken</title></head><body>");
+    printVenster.document.write("<pre>" + tekst + "</pre>");
+    printVenster.document.write("</body></html>");
+    printVenster.document.close();
+    printVenster.focus();
+    printVenster.print();
+    printVenster.close();
 });
-}
+
+
