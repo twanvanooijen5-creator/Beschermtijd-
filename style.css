@@ -8,7 +8,7 @@ body {
 
 .container {
     max-width: 500px;
-    margin: 50px auto;
+    margin: 20px auto;
     padding: 20px;
     background: white;
     border-radius: 8px;
@@ -31,7 +31,6 @@ button {
     background-color:red;
     color:white;
     border-color:red;
-    
 }
 
 .hidden {
@@ -47,15 +46,6 @@ button {
 #alternatieven {
     text-align: left;
     margin-top: 10px;
-    
-    
-
-}
-
-#totaalDagen {
-    text-align: left;
-    margin-top: 10px;
-    color: red;
 }
 
 #downloadBtn {
@@ -65,7 +55,6 @@ button {
     background-color:#2e2929;
     color:white;
     border-color:#2e2929;
-  
 }
 
 #titel {
@@ -83,28 +72,25 @@ button {
 #levensbalk {
     width: 100%;
     height: 30px;
-    background-color: #4CAF50; /* Groen voor leven */
+    background-color: #4CAF50;
     border-radius: 5px;
     overflow: hidden;
     position: relative;
 }
 
-
 #schermtijdBalk {
     height: 100%;
-    background-color: red; /* Donkerrood voor schermtijd */
-    width: 0%; /* Start leeg */
+    background-color: red;
+    width: 0%;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: width 2.5s ease-in-out; /* 🌟 vloeiende animatie */
+    transition: width 2.5s ease-in-out;
 }
 
-
-
 #balkTekst {
-    display: none; /* verberg tekst binnen balk */
+    display: none;
 }
 
 #levensbalkTekst {
@@ -113,3 +99,47 @@ button {
     text-align: center;
 }
 
+.boekenleggerContainer {
+    height: 4cm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    margin-top: 10px;
+}
+
+/* Compacte mobiele styling */
+@media (max-width: 480px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    input[type=number] {
+        width: 80px;
+        font-size: 16px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
+
+    .boekenleggerContainer {
+        font-size: 1.2em;
+        height: 3cm;
+        letter-spacing: 2px;
+    }
+
+    #levensbalk {
+        height: 20px;
+    }
+
+    #schermtijdBalk {
+        font-size: 12px;
+    }
+}
