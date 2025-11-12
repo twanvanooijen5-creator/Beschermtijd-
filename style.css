@@ -1,91 +1,133 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
-  margin: 0;
-  padding: 20px;
-  text-align: center; /* CENTRERING */
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #2e2929;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
-h1, h2, h3 {
-  color: #333;
-  text-align: center;
+.container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
-input[type="number"] {
-  padding: 8px;
-  width: 60px;
-  font-size: 16px;
+input[type=number] {
+    padding: 10px;
+    font-size: 18px;
+    width: 100px;
+    margin: 10px;
+    border: 1px solid black;
+    background-color: rgb(233, 227, 227);
+    text-align: center;
 }
 
 button {
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#resultaat {
-  margin-top: 20px;
-}
-
-#output p {
-  margin: 10px 0;
-  text-align: center; /* CENTRERING */
-}
-
-#schermtijdBalk {
-  height: 25px;
-  background-color: red;
-  width: 0%;
-  transition: width 1s ease-in-out;
-}
-
-#levensbalkContainer {
-  margin-top: 20px;
-  width: 100%;
-  background-color: #4CAF50;
-  height: 25px;
-  position: relative;
-}
-
-#levensbalkTekst {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  top: 0;
-  color: white;
-  font-weight: bold;
-  line-height: 25px;
-}
-
-#downloadBtn {
-  margin-top: 20px;
-}
-
-.boekenleggerContainer {
-  width: 100%;
-  max-width: 400px;
-  height: 50px; /* iets dikker voor mobiel */
-  background: linear-gradient(to right, red 50%, green 50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
-  margin: 20px auto;
-  text-align: center;
-  border: 2px dashed #555;
-  font-size: 1.5em;
-  letter-spacing: 4px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    margin: 5px;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
-ul {
-  text-align: center;
-  list-style-position: inside;
-  padding-left: 0;
+#waarschuwing {
+    text-align: center;
+    margin-top: 10px;
+    color: red;
+}
+
+#alternatieven {
+    text-align: center; /* gecentreerd */
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+#alternatieven li {
+    margin-bottom: 5px;
+}
+
+#totaalDagen {
+    text-align: center;
+    margin-top: 10px;
+    color: red;
+}
+
+#downloadBtn {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color:#2e2929;
+    color:white;
+    border: 1px solid #2e2929;
+}
+
+#titel {
+    color: red;
+}
+
+#watdoen {
+    text-align: center; 
+}
+
+#levensbalkContainer {
+    margin: 20px 0;
+}
+
+#levensbalk {
+    width: 100%;
+    height: 30px;
+    background-color: #4CAF50; /* groen */
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+#schermtijdBalk {
+    height: 100%;
+    background-color: red; /* rood */
+    width: 0%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 2.5s ease-in-out;
+}
+
+#balkTekst {
+    display: none;
+}
+
+#levensbalkTekst {
+    margin-top: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    input[type=number] {
+        width: 80px;
+        font-size: 16px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 8px 15px;
+    }
 }

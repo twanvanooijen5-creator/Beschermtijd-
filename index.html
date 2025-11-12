@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tijdsloket</title>
-<link rel="stylesheet" href="style.css">
-<!-- jsPDF library voor mobiel PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Beschermtijd</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <div class="container">
+        <h1 id="titel">Beschermtijd!</h1>
+        <p>Hoeveel uur per dag spendeer jij gemiddeld aan doelloos scrollen?</p>
+        
+        <input type="number" id="hoursInput" min="0" max="24" step="0.1" placeholder="Bijv. 4.5">
+        <button onclick="berekenTijd()"><strong>Bereken</strong></button>
+        <button id="downloadBtn" class="hidden">Download ticket</button>
 
-<div class="container">
-  <h1>Tijdsloket</h1>
-  <p>Hoeveel uur per dag zit jij gemiddeld op je smartphone?</p>
-  
-  <input type="number" id="hoursInput" min="0" max="24" step="0.1">
-  <button onclick="berekenTijd()">Bereken</button>
-  
-  <div id="resultaat" class="hidden">
-    <div id="output"></div>
-    
-    <div id="levensbalkContainer">
-      <div id="schermtijdBalk"></div>
-      <div id="levensbalkTekst"></div>
+        <div id="resultaat" class="hidden">
+            <h2>Jouw Jaarlijkse Schermtijd</h2>
+            <p id="output"></p>
+
+            <div id="levensbalkContainer" class="hidden">
+                <div id="levensbalk">
+                    <div id="schermtijdBalk">
+                        <span id="balkTekst"></span>
+                    </div>
+                </div>
+                <p id="levensbalkTekst"></p>
+            </div>
+
+            <h3 id="watdoen">Wat had je in die tijd kunnen doen?</h3>
+            <ul id="alternatieven"></ul>
+
+            <p id="waarschuwing">
+                <strong>
+                    Download jouw tijdsindeling via de downloadknop.<br><br>
+                    <a href="https://forms.gle/z5u5Bwiqfr6rguXq7">Wat vond je ervan?</a>
+                </strong>
+            </p>
+        </div>
     </div>
 
-    <button id="downloadBtn" class="hidden">Download PDF / Print</button>
-    
-    <div class="boekenleggerContainer">BESCHERMTIJD!</div>
-    <p><em>Knip jouw boekenlegger uit als reminder van jouw schermtijd!</em></p>
-
-    <h3>Wat had je kunnen doen met die tijd?</h3>
-    <ul id="alternatieven"></ul>
-  </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
