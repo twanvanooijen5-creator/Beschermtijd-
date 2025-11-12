@@ -144,23 +144,67 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     printVenster.focus();
     printVenster.print();
   } else {
+    // ✅ Verbeterde mobiele PDF-versie
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text("Tijdsloket Ticket", 105, 20, null, null, "center");
-    doc.setFontSize(12);
-    doc.text(`Je zit jaarlijks ${totaalUren.toFixed(0)} uur op je smartphone.`, 20, 40);
-    doc.text(`Dat is ongeveer ${afgerondeDagen} dagen per jaar.`, 20, 50);
-    doc.text(`In een mensenleven is dat ${levensJaren.toFixed(1)} jaar (${percentageLeven.toFixed(1)}%).`, 20, 60);
-    doc.text("Wat had je kunnen doen met die tijd:", 20, 75);
-    alternatievenBerekening.forEach((item, index) => {
-      doc.text(`- ${item}`, 25, 85 + index * 8);
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4"
     });
+
+    const centerX = 105; // midden van A4 (210mm breed)
+
+    // Titel
+    doc.setFontSize(20);
+    doc.setTextColor(220, 0, 0);
+    doc.text("📱 Tijdsloket Ticket", centerX, 25, { align: "center" });
+
+    // Uitslagtekst
+    doc.setFontSize(12);
+    doc.setTextColor(30, 30, 30);
+    const tekstregels = [
+      `Je zit jaarlijks ${totaalUren.toFixed(0)} uur op je smartphone.`,
+      `Dat is ongeveer ${afgerondeDagen} dagen per jaar.`,
+      `In een mensenleven van ${levensverwachting} jaar is dat ${levensJaren.toFixed(1)} jaar (${percentageLeven.toFixed(1)}%).`
+    ];
+    tekstregels.forEach((regel, i) => {
+      doc.text(regel, centerX, 45 + i * 8, { align: "center" });
+    });
+
+    // Alternatieven
+    doc.setFontSize(13);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Wat had je kunnen doen met die tijd?", centerX, 75, { align: "center" });
+
+    doc.setFontSize(11);
+    let yPos = 85;
+    alternatievenBerekening.forEach(item => {
+      doc.text(`• ${item}`, centerX, yPos, { align: "center" });
+      yPos += 7;
+    });
+
+    // Dikkere boekenlegger-balk
+    const balkBreedte = 160;
+    const balkHoogte = 25;
+    const startX = centerX - balkBreedte / 2;
+    const startY = yPos + 20;
+
     doc.setFillColor(255, 0, 0);
-    doc.rect(20, 130, (160 * percentageLeven) / 100, 10, "F");
-    doc.setFillColor(0, 200, 0);
-    doc.rect(20 + (160 * percentageLeven) / 100, 130, 160 * (1 - percentageLeven / 100), 10, "F");
-    doc.text("✂️ Knip jouw boekenlegger uit als reminder!", 20, 160);
+    doc.rect(startX, startY, (balkBreedte * percentageLeven) / 100, balkHoogte, "F");
+    doc.setFillColor(76, 175, 80);
+    doc.rect(startX + (balkBreedte * percentageLeven) / 100, startY, balkBreedte * (1 - percentageLeven / 100), balkHoogte, "F");
+
+    // Tekst op de boekenleggerbalk
+    doc.setFontSize(14);
+    doc.setTextColor(255, 255, 255);
+    doc.text("BESCHERMTIJD!", centerX, startY + 17, { align: "center" });
+
+    // Knip-instructie
+    doc.setFontSize(11);
+    doc.setTextColor(50, 50, 50);
+    doc.text("✂️ Knip jouw boekenlegger uit als reminder van jouw schermtijd!", centerX, startY + 40, { align: "center" });
+
+    // Download PDF
     doc.save("tijdsloket-ticket.pdf");
   }
 });
