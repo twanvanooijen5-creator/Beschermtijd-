@@ -187,7 +187,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     // Titel
     doc.setFontSize(20);
     doc.setTextColor(220, 0, 0);
-    doc.text("📱 Tijdsloket Ticket", centerX, 25, { align: "center" });
+    doc.text("Tijdsloket Ticket", centerX, 25, { align: "center" });
 
     // Tekst
     doc.setFontSize(12);
@@ -231,7 +231,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     doc.text(tekst, textX, startY + 17);
 
     // Kniptekst met automatische wrapping
-    const knipTekst = "✂️ Knip jouw boekenlegger uit als reminder van jouw schermtijd!";
+    const knipTekst = "Knip jouw boekenlegger uit als reminder van jouw schermtijd!";
     const lines = doc.splitTextToSize(knipTekst, 180);
     doc.setFontSize(11);
     doc.setTextColor(50, 50, 50);
