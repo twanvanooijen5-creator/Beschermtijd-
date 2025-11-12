@@ -1,3 +1,4 @@
+/* ===== Algemene styling ===== */
 body {
     font-family: 'Segoe UI', sans-serif;
     background-color: #2e2929;
@@ -8,12 +9,11 @@ body {
 
 .container {
     max-width: 500px;
-    margin: 30px auto;
+    margin: 50px auto;
     padding: 20px;
     background: white;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 input[type=number] {
@@ -21,9 +21,8 @@ input[type=number] {
     font-size: 18px;
     width: 100px;
     margin: 10px;
-    border: 1px solid black;
+    border-color: black;
     background-color: rgb(233, 227, 227);
-    text-align: center;
 }
 
 button {
@@ -32,8 +31,7 @@ button {
     cursor: pointer;
     background-color: red;
     color: white;
-    border: 1px solid red;
-    margin: 5px;
+    border-color: red;
 }
 
 .hidden {
@@ -47,18 +45,12 @@ button {
 }
 
 #alternatieven {
-    text-align: center; /* gecentreerd */
+    text-align: left;
     margin-top: 10px;
-    list-style: none;
-    padding: 0;
-}
-
-#alternatieven li {
-    margin-bottom: 5px;
 }
 
 #totaalDagen {
-    text-align: center;
+    text-align: left;
     margin-top: 10px;
     color: red;
 }
@@ -69,7 +61,7 @@ button {
     cursor: pointer;
     background-color:#2e2929;
     color:white;
-    border: 1px solid #2e2929;
+    border-color:#2e2929;
 }
 
 #titel {
@@ -87,7 +79,7 @@ button {
 #levensbalk {
     width: 100%;
     height: 30px;
-    background-color: #4CAF50; /* groen */
+    background-color: #4CAF50; /* Groen voor leven */
     border-radius: 5px;
     overflow: hidden;
     position: relative;
@@ -95,17 +87,17 @@ button {
 
 #schermtijdBalk {
     height: 100%;
-    background-color: red; /* rood */
-    width: 0%;
+    background-color: red; /* Donkerrood voor schermtijd */
+    width: 0%; /* Start leeg */
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: width 2.5s ease-in-out;
+    transition: width 2.5s ease-in-out; /* 🌟 vloeiende animatie */
 }
 
 #balkTekst {
-    display: none;
+    display: none; /* verberg tekst binnen balk */
 }
 
 #levensbalkTekst {
@@ -114,20 +106,51 @@ button {
     text-align: center;
 }
 
-/* Responsiveness */
-@media (max-width: 600px) {
+/* ===== Printvriendelijke CSS ===== */
+@media print {
+    body {
+        background-color: white !important;
+        color: black !important;
+        margin: 0;
+        padding: 0;
+        font-size: 12pt;
+    }
+
     .container {
-        margin: 20px;
-        padding: 15px;
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        page-break-inside: avoid;
     }
 
-    input[type=number] {
-        width: 80px;
-        font-size: 16px;
+    button, input, #downloadBtn {
+        display: none; /* Knoppen en input verdwijnen bij print */
     }
 
-    button {
-        font-size: 16px;
-        padding: 8px 15px;
+    #levensbalk {
+        height: 20px; /* Iets kleiner op papier */
+    }
+
+    #schermtijdBalk {
+        width: auto !important; /* Houd balk zichtbaar bij print */
+        color: black;
+    }
+
+    #balkTekst {
+        color: black !important;
+        font-weight: bold;
+        display: block !important;
+    }
+
+    #alternatieven {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    a {
+        text-decoration: underline;
+        color: black !important;
     }
 }

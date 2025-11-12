@@ -10,24 +10,24 @@ function berekenTijd() {
     const totaalDagen = totaalUren / 24;
     const afgerondeDagen = totaalDagen.toFixed(1);
 
-    const levensverwachting = 80;
+    const levensverwachting = 80; // jaren
     const levensUren = totaalUren * levensverwachting;
     const levensDagen = levensUren / 24;
     const levensJaren = levensDagen / 365;
     const percentageLeven = Math.min((levensJaren / levensverwachting) * 100, 100);
 
-    // Output
     const output = `
-        Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone.<br>
-        Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar!<br>
-        In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat ongeveer <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!
+        Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone. 
+        Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar!<br><br>
+        In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat 
+        ongeveer <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!
     `;
     document.getElementById("output").innerHTML = output;
     document.getElementById("resultaat").classList.remove("hidden");
     document.getElementById("downloadBtn").classList.remove("hidden");
     document.getElementById("levensbalkContainer").classList.remove("hidden");
 
-    // Balk animatie
+    // Update visuele balk
     const schermtijdBalk = document.getElementById("schermtijdBalk");
     const balkTekst = document.getElementById("balkTekst");
     const levensbalkTekst = document.getElementById("levensbalkTekst");
@@ -59,6 +59,7 @@ function berekenTijd() {
 
     const altList = document.getElementById("alternatieven");
     altList.innerHTML = "";
+
     alternatieven.forEach(item => {
         const aantal = Math.floor(totaalUren / item.tijdPer);
         const li = document.createElement("li");
@@ -67,7 +68,7 @@ function berekenTijd() {
     });
 }
 
-// Download ticket
+// ✅ Download ticket en printfunctie
 document.getElementById("downloadBtn").addEventListener("click", function () {
     const urenPerDag = parseFloat(document.getElementById("hoursInput").value) || 0;
     const dagenPerJaar = 365;
@@ -93,6 +94,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
         { activiteit: "met vrienden afspreken", tijdPer: 2 },
         { activiteit: "een workout doen van 45 minuten", tijdPer: 0.75 }
     ];
+
     const alternatievenBerekening = alternatieven.map(item => {
         const aantal = Math.floor(totaalUren / item.tijdPer);
         return `${aantal} × ${item.activiteit}`;
@@ -103,26 +105,81 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     const groeneBlokjes = totaalBlokjes - rodeBlokjes;
     const asciiBalk = "🟥".repeat(rodeBlokjes) + "🟩".repeat(groeneBlokjes);
 
+    // ✅ Printvriendelijke HTML met boekenlegger
     const ticketHTML = `
     <html>
     <head>
         <title>Tijdsloket Ticket</title>
         <style>
-            body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; background-color: #f9f9f9;}
+            body { 
+                font-family: 'Segoe UI', sans-serif; 
+                text-align: center; 
+                padding: 20px; 
+                background-color: #f9f9f9;
+            }
             h1 { color: red; }
-            .ticket { border: 2px dashed #2e2929; padding: 20px; border-radius: 10px; display: inline-block; width: 80%; max-width: 500px; background-color: white; text-align: center;}
-            ul { text-align: center; margin: 10px auto; padding: 0; list-style: none;}
+            .ticket { 
+                border: 2px dashed #2e2929; 
+                padding: 20px; 
+                border-radius: 10px; 
+                display: inline-block; 
+                width: 80%; 
+                max-width: 500px; 
+                background-color: white;
+                text-align: center;
+            }
+            ul { 
+                text-align: left; 
+                margin: 10px auto; 
+                display: inline-block; 
+            }
             p { margin: 5px 0; }
 
-            .boekenleggerTitel { font-size: 1.2em; font-weight: bold; margin-top: 40px; margin-bottom: 10px; color: #2e2929; text-align: center;}
-            .boekenleggerContainer { border: 2px dashed #555; margin: 10px auto 30px auto; width: 18cm; height: 5cm; background: linear-gradient(to right, #ff0000 ${percentageLeven.toFixed(1)}%, #4CAF50 ${percentageLeven.toFixed(1)}%); color: white; font-size: 2em; font-weight: bold; display: flex; align-items: center; justify-content: center; text-align: center; letter-spacing: 4px; text-shadow: 1px 1px 3px rgba(0,0,0,0.6);}
-            
-            .kniptekst { font-style: italic; margin-top: 10px; font-size: 0.9em; color: #333; }
+            .boekenleggerTitel {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin-top: 40px;
+                margin-bottom: 10px;
+                color: #2e2929;
+            }
+
+            .boekenleggerContainer {
+                border: 2px dashed #555;
+                margin: 10px auto 30px auto;
+                width: 18cm;
+                height: 5cm;
+                background: linear-gradient(
+                    to right,
+                    #ff0000 ${percentageLeven.toFixed(1)}%, 
+                    #4CAF50 ${percentageLeven.toFixed(1)}%
+                );
+                color: white;
+                font-size: 2em;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                letter-spacing: 4px;
+                text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            }
+
+            .kniptekst {
+                font-style: italic;
+                margin-top: 10px;
+                font-size: 0.9em;
+                color: #333;
+            }
 
             @media print {
                 body { background: white; }
                 .ticket { box-shadow: none; }
-                * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important;}
+
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                    color-adjust: exact !important;
+                }
             }
         </style>
     </head>
@@ -131,17 +188,23 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
             <h1>Tijdsloket Ticket</h1>
             <p>Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone.</p>
             <p>Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar!</p>
-            <p>In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat ongeveer <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!</p>
+            <p>In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat ongeveer 
+               <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!</p>
             <p>Levensbalk: ${asciiBalk}</p>
+
             <h3>Wat had je kunnen doen met die tijd?</h3>
-            <ul>${alternatievenBerekening.map(a => `<li>${a}</li>`).join('')}</ul>
+            <ul>
+                ${alternatievenBerekening.map(a => `<li>${a}</li>`).join('')}
+            </ul>
         </div>
+
         <div class="boekenleggerTitel">✂️ Knip jouw boekenlegger uit!</div>
         <div class="boekenleggerContainer">BESCHERMTIJD!</div>
     </body>
     </html>
     `;
 
+    // ✅ Open printvenster
     const printVenster = window.open("", "", "height=800,width=1000");
     printVenster.document.write(ticketHTML);
     printVenster.document.close();
@@ -149,6 +212,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     printVenster.print();
     printVenster.close();
 
+    // ✅ Download als .txt-bestand
     const tekst = `
 Je zit jaarlijks ${totaalUren.toFixed(0)} uur op je smartphone.
 Dat is ongeveer ${afgerondeDagen} dagen per jaar.
