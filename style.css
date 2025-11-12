@@ -1,145 +1,94 @@
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #2e2929;
-    margin: 0;
-    padding: 0;
-    text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #2e2929;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
 
 .container {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 input[type=number] {
-    padding: 10px;
-    font-size: 18px;
-    width: 100px;
-    margin: 10px;
-    border-color: black;
-    background-color: rgb(233, 227, 227);
+  padding: 10px;
+  font-size: 18px;
+  width: 100px;
+  margin: 10px;
+  border: 2px solid black;
+  background-color: rgb(233, 227, 227);
+  border-radius: 4px;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    background-color:red;
-    color:white;
-    border-color:red;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
 }
 
-.hidden {
-    display: none;
-}
-
-#waarschuwing {
-    text-align: center;
-    margin-top: 10px;
-    color: red;
-}
-
-#alternatieven {
-    text-align: left;
-    margin-top: 10px;
+button:hover {
+  opacity: 0.9;
 }
 
 #downloadBtn {
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    background-color:#2e2929;
-    color:white;
-    border-color:#2e2929;
+  background-color: #2e2929;
+}
+
+.hidden {
+  display: none;
 }
 
 #titel {
-    color: red;
+  color: red;
 }
 
 #watdoen {
-    text-align: center; 
+  text-align: center;
 }
 
 #levensbalkContainer {
-    margin: 20px 0;
+  margin: 20px 0;
 }
 
 #levensbalk {
-    width: 100%;
-    height: 30px;
-    background-color: #4CAF50;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #4CAF50;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
 }
 
 #schermtijdBalk {
-    height: 100%;
-    background-color: red;
-    width: 0%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: width 2.5s ease-in-out;
-}
-
-#balkTekst {
-    display: none;
+  height: 100%;
+  background-color: red;
+  width: 0%;
+  position: relative;
+  transition: width 2.5s ease-in-out;
 }
 
 #levensbalkTekst {
-    margin-top: 8px;
-    font-weight: bold;
-    text-align: center;
+  margin-top: 8px;
+  font-weight: bold;
+  text-align: center;
 }
 
-.boekenleggerContainer {
-    height: 4cm;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5em;
-    color: white;
-    font-weight: bold;
-    letter-spacing: 3px;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-    margin-top: 10px;
+#alternatieven {
+  text-align: left;
+  margin-top: 10px;
 }
 
-/* Compacte mobiele styling */
-@media (max-width: 480px) {
-    .container {
-        margin: 10px;
-        padding: 15px;
-    }
-
-    input[type=number] {
-        width: 80px;
-        font-size: 16px;
-    }
-
-    button {
-        font-size: 16px;
-        padding: 8px 15px;
-    }
-
-    .boekenleggerContainer {
-        font-size: 1.2em;
-        height: 3cm;
-        letter-spacing: 2px;
-    }
-
-    #levensbalk {
-        height: 20px;
-    }
-
-    #schermtijdBalk {
-        font-size: 12px;
-    }
+#waarschuwing {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
 }
