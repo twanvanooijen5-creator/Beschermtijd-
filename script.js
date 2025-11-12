@@ -16,14 +16,17 @@ function berekenTijd() {
   const levensJaren = levensDagen / 365;
   const percentageLeven = Math.min((levensJaren / levensverwachting) * 100, 100);
 
-  // Tekstuele output
+  // Tekstuele output op de pagina
   const output = `
-    Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone. 
+    Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone.<br>
     Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar!<br><br>
     In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat 
     ongeveer <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!
   `;
-  document.getElementById("output").innerHTML = output;
+  const outputDiv = document.getElementById("output");
+  outputDiv.innerHTML = output;
+  outputDiv.style.textAlign = "center";
+
   document.getElementById("resultaat").classList.remove("hidden");
   document.getElementById("downloadBtn").classList.remove("hidden");
   document.getElementById("levensbalkContainer").classList.remove("hidden");
@@ -31,7 +34,6 @@ function berekenTijd() {
   // Visuele balk met animatie
   const schermtijdBalk = document.getElementById("schermtijdBalk");
   const balkTekst = document.getElementById("balkTekst");
-  const levensbalkTekst = document.getElementById("levensbalkTekst");
 
   schermtijdBalk.style.width = "0%";
   balkTekst.textContent = "";
@@ -48,7 +50,10 @@ function berekenTijd() {
     currentPercentage += step;
   }, 20);
 
-  levensbalkTekst.textContent = `${levensJaren.toFixed(1)} van ${levensverwachting} levensjaren = ${percentageLeven.toFixed(1)}% schermtijd`;
+  // Dynamische boekenlegger
+  const boekenlegger = document.querySelector(".boekenleggerContainer");
+  boekenlegger.style.background = `linear-gradient(to right, #ff0000 ${percentageLeven}%, #4CAF50 ${percentageLeven}%)`;
+  boekenlegger.textContent = "BESCHERMTIJD!";
 
   // Alternatieven
   const alternatieven = [
@@ -60,7 +65,6 @@ function berekenTijd() {
 
   const altList = document.getElementById("alternatieven");
   altList.innerHTML = "";
-
   alternatieven.forEach(item => {
     const aantal = Math.floor(totaalUren / item.tijdPer);
     const li = document.createElement("li");
@@ -69,6 +73,7 @@ function berekenTijd() {
   });
 }
 
+// Download / print functionaliteit
 document.getElementById("downloadBtn").addEventListener("click", function () {
   const urenPerDag = parseFloat(document.getElementById("hoursInput").value) || 0;
   const dagenPerJaar = 365;
@@ -88,6 +93,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     { activiteit: "met vrienden afspreken", tijdPer: 2 },
     { activiteit: "een workout doen van 45 minuten", tijdPer: 0.75 }
   ];
+
   const alternatievenBerekening = alternatieven.map(item => {
     const aantal = Math.floor(totaalUren / item.tijdPer);
     return `${aantal} × ${item.activiteit}`;
@@ -101,71 +107,47 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
   if (!isMobile) {
-    // 💻 DESKTOP: printvenster
+    // DESKTOP: printvenster
     const ticketHTML = `
     <html>
     <head>
-        <title>Tijdsloket Ticket</title>
-        <style>
-            body { 
-                font-family: 'Segoe UI', sans-serif; 
-                text-align: center; 
-                padding: 20px; 
-                background-color: #f9f9f9;
-            }
-            h1 { color: red; }
-            .ticket { 
-                border: 2px dashed #2e2929; 
-                padding: 20px; 
-                border-radius: 10px; 
-                display: inline-block; 
-                width: 80%; 
-                max-width: 500px; 
-                background-color: white;
-            }
-            ul { 
-                text-align: left; 
-                margin: 10px auto; 
-                display: inline-block; 
-            }
-            .boekenleggerContainer {
-                border: 2px dashed #555;
-                margin: 20px auto 30px auto;
-                width: 18cm;
-                height: 5cm;
-                background: linear-gradient(to right,
-                    #ff0000 ${percentageLeven.toFixed(1)}%, 
-                    #4CAF50 ${percentageLeven.toFixed(1)}%);
-                color: white;
-                font-size: 2em;
-                font-weight: bold;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                letter-spacing: 4px;
-                text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-            }
-            @media print {
-                * {
-                    -webkit-print-color-adjust: exact !important;
-                    print-color-adjust: exact !important;
-                }
-            }
-        </style>
+      <title>Tijdsloket Ticket</title>
+      <style>
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; background-color: #f9f9f9; }
+        h1 { color: red; }
+        .ticket { border: 2px dashed #2e2929; padding: 20px; border-radius: 10px; display: inline-block; width: 80%; max-width: 500px; background-color: white; }
+        ul { text-align: left; margin: 10px auto; display: inline-block; }
+        .boekenleggerContainer {
+          border: 2px dashed #555;
+          margin: 20px auto 30px auto;
+          width: 18cm;
+          height: 5cm;
+          background: linear-gradient(to right, #ff0000 ${percentageLeven}%, #4CAF50 ${percentageLeven}%);
+          color: white;
+          font-size: 2em;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          letter-spacing: 4px;
+          text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+        @media print { * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; } }
+      </style>
     </head>
     <body>
-        <div class="ticket">
-            <h1>Tijdsloket Ticket</h1>
-            <p>Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone.</p>
-            <p>Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar.</p>
-            <p>In een gemiddeld mensenleven betekent dat ongeveer <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!</p>
-            <p>Levensbalk: ${asciiBalk}</p>
-            <h3>Wat had je kunnen doen met die tijd?</h3>
-            <ul>${alternatievenBerekening.map(a => `<li>${a}</li>`).join("")}</ul>
-        </div>
-        <div class="boekenleggerContainer">BESCHERMTIJD!</div>
-        <p><em>✂️ Knip jouw boekenlegger uit als reminder van jouw schermtijd!</em></p>
+      <div class="ticket">
+        <h1>Tijdsloket Ticket</h1>
+        <p>Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone.</p>
+        <p>Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar.</p>
+        <p>In een gemiddeld mensenleven betekent dat ongeveer <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!</p>
+        <p>Levensbalk: ${asciiBalk}</p>
+        <h3>Wat had je kunnen doen met die tijd?</h3>
+        <ul>${alternatievenBerekening.map(a => `<li>${a}</li>`).join("")}</ul>
+      </div>
+      <div class="boekenleggerContainer">BESCHERMTIJD!</div>
+      <p><em>Knip jouw boekenlegger uit als reminder van jouw schermtijd!</em></p>
     </body>
     </html>
     `;
@@ -178,7 +160,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     printVenster.close();
 
   } else {
-    // 📱 MOBIEL: PDF-versie via jsPDF
+    // MOBIEL: PDF via jsPDF
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
@@ -222,7 +204,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     doc.setFillColor(76, 175, 80);
     doc.rect(startX + (balkBreedte * percentageLeven) / 100, startY, balkBreedte * (1 - percentageLeven / 100), balkHoogte, "F");
 
-    // ✅ Nauwkeurig gecentreerde boekenleggertekst
+    // Gecentreerde boekenleggertekst
     const tekst = "BESCHERMTIJD!";
     doc.setFontSize(14);
     doc.setTextColor(255, 255, 255);
@@ -230,7 +212,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     const textX = startX + (balkBreedte - textWidth) / 2;
     doc.text(tekst, textX, startY + 17);
 
-    // Kniptekst met automatische wrapping
+    // Kniptekst
     const knipTekst = "Knip jouw boekenlegger uit als reminder van jouw schermtijd!";
     const lines = doc.splitTextToSize(knipTekst, 180);
     doc.setFontSize(11);
