@@ -26,29 +26,33 @@ function berekenTijd() {
     document.getElementById("resultaat").classList.remove("hidden");
     document.getElementById("levensbalkContainer").classList.remove("hidden");
 
-    // Balk-animatie (rood over groen)
     const schermtijdBalk = document.getElementById("schermtijdBalk");
     const levensbalkTekst = document.getElementById("levensbalkTekst");
-
     schermtijdBalk.style.width = "0%";
 
     let currentPercentage = 0;
-    const step = 0.5;
+    const step = 0.5; // Hoe snel de balk groeit, in %
+    const intervalTime = 20; // interval in ms
+
     const interval = setInterval(() => {
         if (currentPercentage >= percentageLeven) {
+            currentPercentage = percentageLeven; // exact percentage
+            schermtijdBalk.style.width = currentPercentage + "%";
+            levensbalkTekst.textContent = `${levensJaren.toFixed(1)} van ${levensverwachting} levensjaren = ${percentageLeven.toFixed(1)}% schermtijd`;
             clearInterval(interval);
-            currentPercentage = percentageLeven;
 
-            // ✅ Printen automatisch na 20 seconden
+            // Printen automatisch 10 seconden na animatie
             setTimeout(() => {
                 genereerEnPrintTicket(urenPerDag);
-            }, 20000); // 20 seconden vertraging
+            }, 10000);
+            return;
         }
-        schermtijdBalk.style.width = currentPercentage + "%";
-        currentPercentage += step;
-    }, 20);
 
-    levensbalkTekst.textContent = `${levensJaren.toFixed(1)} van ${levensverwachting} levensjaren = ${percentageLeven.toFixed(1)}% schermtijd`;
+        schermtijdBalk.style.width = currentPercentage + "%";
+        const jarenLopend = (percentageLeven / 100) * levensverwachting;
+        levensbalkTekst.textContent = `${(currentPercentage / 100 * levensverwachting).toFixed(1)} van ${levensverwachting} levensjaren = ${(currentPercentage).toFixed(1)}% schermtijd`;
+        currentPercentage += step;
+    }, intervalTime);
 
     // Alternatieven
     const alternatieven = [
@@ -141,12 +145,8 @@ function genereerEnPrintTicket(urenPerDag) {
     printVenster.document.write(ticketHTML);
     printVenster.document.close();
 
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const wachttijd = isMobile ? 1200 : 400;
-
-    setTimeout(() => {
-        printVenster.focus();
-        printVenster.print();
-        setTimeout(() => printVenster.close(), 1500);
-    }, wachttijd);
+    // Printen direct na het laden van het printvenster
+    printVenster.focus();
+    printVenster.print();
+    setTimeout(() => printVenster.close(), 1500);
 }
