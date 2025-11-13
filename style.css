@@ -38,21 +38,9 @@ button {
     display: none;
 }
 
-#waarschuwing {
-    text-align: center;
-    margin-top: 10px;
-    color: red;
-}
-
 #alternatieven {
     text-align: left;
     margin-top: 10px;
-}
-
-#totaalDagen {
-    text-align: left;
-    margin-top: 10px;
-    color: red;
 }
 
 #downloadBtn {
@@ -64,40 +52,15 @@ button {
     border-color:#2e2929;
 }
 
-#titel {
-    color: red;
-}
-
-#watdoen {
-    text-align: center; 
-}
-
 #levensbalkContainer {
     margin: 20px 0;
 }
 
-#levensbalk {
-    width: 100%;
-    height: 30px;
-    background-color: #4CAF50; /* Groen voor leven */
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-}
-
 #schermtijdBalk {
-    height: 100%;
-    background-color: red; /* Donkerrood voor schermtijd */
-    width: 0%; /* Start leeg */
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: width 2.5s ease-in-out; /* 🌟 vloeiende animatie */
-}
-
-#balkTekst {
-    display: none; /* verberg tekst binnen balk */
+    height: 30px;
+    background-color: red;
+    width: 0%;
+    transition: width 2.5s ease-in-out;
 }
 
 #levensbalkTekst {
@@ -111,11 +74,8 @@ button {
     body {
         background-color: white !important;
         color: black !important;
-        margin: 0;
-        padding: 0;
         font-size: 12pt;
     }
-
     .container {
         box-shadow: none;
         border: none;
@@ -124,33 +84,51 @@ button {
         padding: 0;
         page-break-inside: avoid;
     }
-
     button, input, #downloadBtn {
-        display: none; /* Knoppen en input verdwijnen bij print */
+        display: none;
     }
-
-    #levensbalk {
-        height: 20px; /* Iets kleiner op papier */
-    }
-
     #schermtijdBalk {
-        width: auto !important; /* Houd balk zichtbaar bij print */
-        color: black;
+        width: auto !important;
     }
+}
 
-    #balkTekst {
-        color: black !important;
-        font-weight: bold;
-        display: block !important;
+/* ===== Mobiele verbeteringen ===== */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        margin: 20px auto;
     }
+    button, input[type=number] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
 
-    #alternatieven {
-        list-style-type: disc;
-        padding-left: 20px;
-    }
+/* ===== Meldingstijl ===== */
+#melding {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
 
-    a {
-        text-decoration: underline;
-        color: black !important;
-    }
+.melding-box {
+    background: white;
+    color: #2e2929;
+    font-size: 1.2em;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
