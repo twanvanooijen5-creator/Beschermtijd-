@@ -30,8 +30,9 @@ function berekenTijd() {
     let currentPercentage = 0;
     const step = 0.5;
     const interval = setInterval(() => {
-        if (currentPercentage >= percentageLeven) clearInterval(interval);
-        else {
+        if (currentPercentage >= percentageLeven) {
+            clearInterval(interval);
+        } else {
             currentPercentage += step;
             schermtijdBalk.style.width = currentPercentage + "%";
         }
@@ -57,7 +58,7 @@ function berekenTijd() {
     });
 }
 
-// ✅ Download & print — met mobiele fix én visuele melding
+// ✅ Download & print — met mobiele detectie en auto-print fix
 document.getElementById("downloadBtn").addEventListener("click", function () {
     const urenPerDag = parseFloat(document.getElementById("hoursInput").value) || 0;
     if (isNaN(urenPerDag) || urenPerDag < 0 || urenPerDag > 24) {
@@ -91,6 +92,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     const groeneBlokjes = totaalBlokjes - rodeBlokjes;
     const asciiBalk = "🟥".repeat(rodeBlokjes) + "🟩".repeat(groeneBlokjes);
 
+    // 🧠 Printvriendelijke HTML
     const ticketHTML = `
     <html>
     <head>
@@ -135,15 +137,14 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     printVenster.document.write(ticketHTML);
     printVenster.document.close();
 
+    // ✅ Detectie: mobiel vs desktop
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const wachttijd = isMobile ? 1500 : 800;
-
-    // Toon melding alleen op mobiel
-    if (isMobile) document.getElementById("melding").classList.remove("hidden");
+    const wachttijd = isMobile ? 1200 : 800; // iets langer op mobiel
 
     setTimeout(() => {
-        if (isMobile) document.getElementById("melding").classList.add("hidden");
         printVenster.focus();
         printVenster.print();
+        // ⚠️ Niet sluiten: dit voorkomt de foutmelding op mobiel
+        // printVenster.close();
     }, wachttijd);
 });
