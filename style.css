@@ -56,11 +56,28 @@ button {
     margin: 20px 0;
 }
 
-#schermtijdBalk {
+#levensbalk {
+    width: 100%;
     height: 30px;
+    background-color: #4CAF50; /* Groen voor leven */
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+#schermtijdBalk {
+    height: 100%;
     background-color: red;
     width: 0%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: width 2.5s ease-in-out;
+}
+
+#balkTekst {
+    display: none;
 }
 
 #levensbalkTekst {
@@ -74,8 +91,11 @@ button {
     body {
         background-color: white !important;
         color: black !important;
+        margin: 0;
+        padding: 0;
         font-size: 12pt;
     }
+
     .container {
         box-shadow: none;
         border: none;
@@ -84,22 +104,33 @@ button {
         padding: 0;
         page-break-inside: avoid;
     }
+
     button, input, #downloadBtn {
         display: none;
     }
+
+    #levensbalk {
+        height: 20px;
+    }
+
     #schermtijdBalk {
         width: auto !important;
+        color: black;
     }
-}
 
-/* ===== Mobiele verbeteringen ===== */
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-        margin: 20px auto;
+    #balkTekst {
+        color: black !important;
+        font-weight: bold;
+        display: block !important;
     }
-    button, input[type=number] {
-        width: 100%;
-        box-sizing: border-box;
+
+    #alternatieven {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    a {
+        text-decoration: underline;
+        color: black !important;
     }
 }

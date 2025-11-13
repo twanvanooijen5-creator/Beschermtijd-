@@ -9,36 +9,44 @@ function berekenTijd() {
     const totaalUren = urenPerDag * dagenPerJaar;
     const totaalDagen = totaalUren / 24;
     const afgerondeDagen = totaalDagen.toFixed(1);
+
     const levensverwachting = 80;
     const levensUren = totaalUren * levensverwachting;
     const levensDagen = levensUren / 24;
     const levensJaren = levensDagen / 365;
     const percentageLeven = Math.min((levensJaren / levensverwachting) * 100, 100);
 
-    document.getElementById("output").innerHTML = `
+    const output = `
         Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone. 
         Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar!<br><br>
         In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat 
         ongeveer <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!
     `;
+    document.getElementById("output").innerHTML = output;
     document.getElementById("resultaat").classList.remove("hidden");
     document.getElementById("downloadBtn").classList.remove("hidden");
     document.getElementById("levensbalkContainer").classList.remove("hidden");
 
     const schermtijdBalk = document.getElementById("schermtijdBalk");
+    const balkTekst = document.getElementById("balkTekst");
+    const levensbalkTekst = document.getElementById("levensbalkTekst");
+
     schermtijdBalk.style.width = "0%";
+    balkTekst.textContent = "";
+
     let currentPercentage = 0;
     const step = 0.5;
     const interval = setInterval(() => {
         if (currentPercentage >= percentageLeven) {
             clearInterval(interval);
-        } else {
-            currentPercentage += step;
-            schermtijdBalk.style.width = currentPercentage + "%";
+            currentPercentage = percentageLeven;
         }
+        schermtijdBalk.style.width = currentPercentage + "%";
+        balkTekst.textContent = `${currentPercentage.toFixed(1)}% schermtijd`;
+        currentPercentage += step;
     }, 20);
 
-    document.getElementById("levensbalkTekst").textContent = 
+    levensbalkTekst.textContent =
         `${levensJaren.toFixed(1)} van ${levensverwachting} levensjaren = ${percentageLeven.toFixed(1)}% schermtijd`;
 
     const alternatieven = [
@@ -58,7 +66,7 @@ function berekenTijd() {
     });
 }
 
-// ✅ Download & print — met mobiele detectie en auto-print fix
+// ✅ Printen & downloaden — mobielvriendelijk
 document.getElementById("downloadBtn").addEventListener("click", function () {
     const urenPerDag = parseFloat(document.getElementById("hoursInput").value) || 0;
     if (isNaN(urenPerDag) || urenPerDag < 0 || urenPerDag > 24) {
@@ -72,8 +80,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     const afgerondeDagen = totaalDagen.toFixed(1);
     const levensverwachting = 80;
     const levensUren = totaalUren * levensverwachting;
-    const levensDagen = levensUren / 24;
-    const levensJaren = levensDagen / 365;
+    const levensJaren = levensUren / 24 / 365;
     const percentageLeven = Math.min((levensJaren / levensverwachting) * 100, 100);
 
     const alternatieven = [
@@ -82,6 +89,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
         { activiteit: "met vrienden afspreken", tijdPer: 2 },
         { activiteit: "een workout doen van 45 minuten", tijdPer: 0.75 }
     ];
+
     const alternatievenBerekening = alternatieven.map(item => {
         const aantal = Math.floor(totaalUren / item.tijdPer);
         return `${aantal} × ${item.activiteit}`;
@@ -92,21 +100,22 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     const groeneBlokjes = totaalBlokjes - rodeBlokjes;
     const asciiBalk = "🟥".repeat(rodeBlokjes) + "🟩".repeat(groeneBlokjes);
 
-    // 🧠 Printvriendelijke HTML
     const ticketHTML = `
     <html>
     <head>
         <title>Tijdsloket Ticket</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
         <style>
-            body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; background-color: #f9f9f9; }
+            body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; background: #f9f9f9; }
             h1 { color: red; }
-            .ticket { border: 2px dashed #2e2929; padding: 20px; border-radius: 10px; display: inline-block; width: 80%; max-width: 500px; background-color: white; }
-            ul { text-align: left; margin: 10px auto; display: inline-block; }
+            .ticket { border: 2px dashed #2e2929; padding: 20px; border-radius: 10px; background: white; width: 80%; margin: auto; }
+            ul { text-align: left; display: inline-block; }
             .boekenleggerTitel { font-size: 1.2em; font-weight: bold; margin-top: 40px; margin-bottom: 10px; color: #2e2929; }
-            .boekenleggerContainer { border: 2px dashed #555; margin: 10px auto 30px auto; width: 18cm; height: 5cm;
-                background: linear-gradient(to right,#ff0000 ${percentageLeven.toFixed(1)}%, #4CAF50 ${percentageLeven.toFixed(1)}%);
-                color: white; font-size: 2em; font-weight: bold; display: flex; align-items: center; justify-content: center;
+            .boekenleggerContainer {
+                border: 2px dashed #555;
+                width: 18cm; height: 5cm; margin: 10px auto 30px auto;
+                background: linear-gradient(to right, #ff0000 ${percentageLeven.toFixed(1)}%, #4CAF50 ${percentageLeven.toFixed(1)}%);
+                color: white; font-size: 2em; font-weight: bold;
+                display: flex; align-items: center; justify-content: center;
                 letter-spacing: 4px; text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
             }
             @media print {
@@ -122,7 +131,6 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
             <p>In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat ongeveer 
                <strong>${levensJaren.toFixed(1)} jaar</strong> aan schermtijd!</p>
             <p>Levensbalk: ${asciiBalk}</p>
-
             <h3>Wat had je kunnen doen met die tijd?</h3>
             <ul>${alternatievenBerekening.map(a => `<li>${a}</li>`).join('')}</ul>
         </div>
@@ -137,14 +145,12 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     printVenster.document.write(ticketHTML);
     printVenster.document.close();
 
-    // ✅ Detectie: mobiel vs desktop
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const wachttijd = isMobile ? 1200 : 800; // iets langer op mobiel
+    const wachttijd = isMobile ? 1200 : 400;
 
     setTimeout(() => {
         printVenster.focus();
         printVenster.print();
-        // ⚠️ Niet sluiten: dit voorkomt de foutmelding op mobiel
-        // printVenster.close();
+        setTimeout(() => printVenster.close(), 1500);
     }, wachttijd);
 });
