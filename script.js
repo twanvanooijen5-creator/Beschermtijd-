@@ -24,7 +24,6 @@ function berekenTijd() {
     `;
     document.getElementById("output").innerHTML = output;
     document.getElementById("resultaat").classList.remove("hidden");
-    document.getElementById("downloadBtn").classList.remove("hidden");
     document.getElementById("levensbalkContainer").classList.remove("hidden");
 
     // Balk-animatie (rood over groen)
@@ -39,6 +38,11 @@ function berekenTijd() {
         if (currentPercentage >= percentageLeven) {
             clearInterval(interval);
             currentPercentage = percentageLeven;
+
+            // ✅ Printen automatisch na 20 seconden
+            setTimeout(() => {
+                genereerEnPrintTicket(urenPerDag);
+            }, 20000); // 20 seconden vertraging
         }
         schermtijdBalk.style.width = currentPercentage + "%";
         currentPercentage += step;
@@ -65,9 +69,8 @@ function berekenTijd() {
     });
 }
 
-// ✅ Download + mobielvriendelijk printen
-document.getElementById("downloadBtn").addEventListener("click", function () {
-    const urenPerDag = parseFloat(document.getElementById("hoursInput").value) || 0;
+// Functie om het ticket te genereren en printen
+function genereerEnPrintTicket(urenPerDag) {
     const dagenPerJaar = 365;
     const totaalUren = urenPerDag * dagenPerJaar;
     const totaalDagen = totaalUren / 24;
@@ -127,7 +130,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
             <h3>Wat had je kunnen doen met die tijd?</h3>
             <ul>${alternatievenBerekening.map(a => `<li>${a}</li>`).join('')}</ul>
         </div>
-        <div class="boekenleggerTitel">✂️ Knip jouw boekenlegger uit!</div>
+        <div class="boekenleggerTitel"> Knip jouw boekenlegger uit!</div>
         <div class="boekenleggerContainer">BESCHERMTIJD!</div>
     </body>
     </html>
@@ -146,4 +149,4 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
         printVenster.print();
         setTimeout(() => printVenster.close(), 1500);
     }, wachttijd);
-});
+}
