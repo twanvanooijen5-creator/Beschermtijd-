@@ -27,12 +27,11 @@ function berekenTijd() {
     document.getElementById("downloadBtn").classList.remove("hidden");
     document.getElementById("levensbalkContainer").classList.remove("hidden");
 
+    // Balk-animatie (rood over groen)
     const schermtijdBalk = document.getElementById("schermtijdBalk");
-    const balkTekst = document.getElementById("balkTekst");
     const levensbalkTekst = document.getElementById("levensbalkTekst");
 
     schermtijdBalk.style.width = "0%";
-    balkTekst.textContent = "";
 
     let currentPercentage = 0;
     const step = 0.5;
@@ -42,13 +41,12 @@ function berekenTijd() {
             currentPercentage = percentageLeven;
         }
         schermtijdBalk.style.width = currentPercentage + "%";
-        balkTekst.textContent = `${currentPercentage.toFixed(1)}% schermtijd`;
         currentPercentage += step;
     }, 20);
 
-    levensbalkTekst.textContent =
-        `${levensJaren.toFixed(1)} van ${levensverwachting} levensjaren = ${percentageLeven.toFixed(1)}% schermtijd`;
+    levensbalkTekst.textContent = `${levensJaren.toFixed(1)} van ${levensverwachting} levensjaren = ${percentageLeven.toFixed(1)}% schermtijd`;
 
+    // Alternatieven
     const alternatieven = [
         { activiteit: "een boek lezen (van 300 pagina's)", tijdPer: 6 },
         { activiteit: "een online cursus afronden", tijdPer: 20 },
@@ -58,6 +56,7 @@ function berekenTijd() {
 
     const altList = document.getElementById("alternatieven");
     altList.innerHTML = "";
+
     alternatieven.forEach(item => {
         const aantal = Math.floor(totaalUren / item.tijdPer);
         const li = document.createElement("li");
@@ -66,14 +65,9 @@ function berekenTijd() {
     });
 }
 
-// ✅ Printen & downloaden — mobielvriendelijk
+// ✅ Download + mobielvriendelijk printen
 document.getElementById("downloadBtn").addEventListener("click", function () {
     const urenPerDag = parseFloat(document.getElementById("hoursInput").value) || 0;
-    if (isNaN(urenPerDag) || urenPerDag < 0 || urenPerDag > 24) {
-        alert("Voer een geldig aantal uren in tussen 0 en 24.");
-        return;
-    }
-
     const dagenPerJaar = 365;
     const totaalUren = urenPerDag * dagenPerJaar;
     const totaalDagen = totaalUren / 24;
@@ -89,7 +83,6 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
         { activiteit: "met vrienden afspreken", tijdPer: 2 },
         { activiteit: "een workout doen van 45 minuten", tijdPer: 0.75 }
     ];
-
     const alternatievenBerekening = alternatieven.map(item => {
         const aantal = Math.floor(totaalUren / item.tijdPer);
         return `${aantal} × ${item.activiteit}`;
@@ -103,13 +96,13 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     const ticketHTML = `
     <html>
     <head>
-        <title>Tijdsloket Ticket</title>
+        <title>Beschermtijd Ticket</title>
         <style>
             body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; background: #f9f9f9; }
             h1 { color: red; }
             .ticket { border: 2px dashed #2e2929; padding: 20px; border-radius: 10px; background: white; width: 80%; margin: auto; }
             ul { text-align: left; display: inline-block; }
-            .boekenleggerTitel { font-size: 1.2em; font-weight: bold; margin-top: 40px; margin-bottom: 10px; color: #2e2929; }
+            .boekenleggerTitel { font-size: 1.2em; font-weight: bold; margin-top: 40px; color: #2e2929; }
             .boekenleggerContainer {
                 border: 2px dashed #555;
                 width: 18cm; height: 5cm; margin: 10px auto 30px auto;
@@ -125,7 +118,7 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
     </head>
     <body>
         <div class="ticket">
-            <h1>Tijdsloket Ticket</h1>
+            <h1>Beschermtijd Ticket</h1>
             <p>Je zit jaarlijks <strong>${totaalUren.toFixed(0)} uur</strong> op je smartphone.</p>
             <p>Dat is ongeveer <strong>${afgerondeDagen} dagen</strong> per jaar!</p>
             <p>In een gemiddeld mensenleven van ${levensverwachting} jaar betekent dat ongeveer 
