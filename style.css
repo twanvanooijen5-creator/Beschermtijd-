@@ -18,8 +18,9 @@ body {
 
 /* Titel rood */
 #titel {
-    color: red;
+    color: red !important;
 }
+
 
 .input-container {
     display: flex;
